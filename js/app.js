@@ -28,11 +28,28 @@ class TextEditor {
     addTextField() {
         const container = document.createElement('div');
         container.className = 'text-container';
-        container.innerHTML = `
-            <input type="text" class="text-input">
-            <button class="clear-button">✕</button>
-        `;
+        container.setAttribute('draggable', 'true');
+
+        const dragHandle = document.createElement('div');
+        dragHandle.className = 'drag-handle';
         
+        const dragDots = document.createElement('div');
+        dragDots.className = 'drag-dots';
+        dragHandle.appendChild(dragDots);
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'text-input';
+        input.placeholder = '+ テキストを追加する';
+
+        const clearButton = document.createElement('button');
+        clearButton.className = 'clear-button';
+        clearButton.textContent = '✕';
+
+        container.appendChild(dragHandle);
+        container.appendChild(input);
+        container.appendChild(clearButton);
+
         this.textAreas.appendChild(container);
         this.setupClearButton(container);
     }

@@ -24,8 +24,11 @@
             <img src="images/onesentence_logo.png" alt="one sentence" class="title-logo">
         </div>
         <div id="textAreas">
-            <div class="text-container">
-                <input type="text" class="text-input">
+            <div class="text-container" draggable="true">
+                <div class="drag-handle">
+                    <div class="drag-dots"></div>
+                </div>
+                <input type="text" class="text-input" placeholder="+ テキストを追加する">
                 <button class="clear-button">✕</button>
             </div>
         </div>
@@ -55,5 +58,6 @@
 
     <script src="js/app.js"></script>
     <script src="js/fullscreen.js"></script>
+    <script src="js/drag-and-drop.js"></script>
 </body>
 </html> 
