@@ -1,6 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
     const textAreas = document.getElementById('textAreas');
     let draggingElement = null;
+    let dropIndicator = null;
+
+    // ドロップインジケーターを作成
+    const createDropIndicator = () => {
+        const indicator = document.createElement('div');
+        indicator.className = 'drop-indicator';
+        document.body.appendChild(indicator);
+        return indicator;
+    };
+
+    // ドロップインジケーターの位置を更新
+    const updateDropIndicator = (container, isAbove) => {
+        if (!dropIndicator) {
+            dropIndicator = createDropIndicator();
+        }
+
+        const rect = container.getBoundingClientRect();
+        const margin = parseInt(getComputedStyle(container).marginBottom);
+        
+        if (isAbove) {
+            // 上のコンテナとの間に表示
+            const prevContainer = container.previousElementSibling;
+            if (prevContainer && prevContainer !== draggingElement) {
+                const prevRect = prevContainer.getBoundingClientRect();
+                dropIndicator.style.top = `${prevRect.bottom + margin / 2}px`;
+            } else {
+                dropIndicator.style.top = `${rect.top - margin / 2}px`;
+            }
+        } else {
+            // 下のコンテナとの間に表示
+            const nextContainer = container.nextElementSibling;
+            if (nextContainer && nextContainer !== draggingElement) {
+                dropIndicator.style.top = `${rect.bottom + margin / 2}px`;
+            } else {
+                dropIndicator.style.top = `${rect.bottom + margin / 2}px`;
+            }
+        }
+
+        dropIndicator.style.left = `${rect.left}px`;
+        dropIndicator.style.width = `${rect.width}px`;
+        dropIndicator.classList.add('active');
+    };
 
     // 新しいテキストエリアが追加されたときにドラッグ可能にする
     const makeTextContainerDraggable = (container) => {
@@ -15,10 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener('dragend', () => {
             draggingElement = null;
             container.classList.remove('dragging');
-            // すべてのドラッグオーバー効果を削除
-            document.querySelectorAll('.text-container').forEach(container => {
-                container.classList.remove('drag-over');
-            });
+            if (dropIndicator) {
+                dropIndicator.classList.remove('active');
+            }
         });
 
         container.addEventListener('dragover', (e) => {
@@ -27,16 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const rect = container.getBoundingClientRect();
             const midY = rect.top + rect.height / 2;
-            
-            if (e.clientY < midY) {
-                container.classList.add('drag-over');
-            } else {
-                container.classList.remove('drag-over');
-            }
+            updateDropIndicator(container, e.clientY < midY);
         });
 
-        container.addEventListener('dragleave', () => {
-            container.classList.remove('drag-over');
+        container.addEventListener('dragleave', (e) => {
+            // マウスが子要素に移動した場合は無視
+            if (e.relatedTarget && container.contains(e.relatedTarget)) return;
+            
+            if (dropIndicator) {
+                dropIndicator.classList.remove('active');
+            }
         });
 
         container.addEventListener('drop', (e) => {
@@ -52,7 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.parentNode.insertBefore(draggingElement, container.nextSibling);
             }
             
-            container.classList.remove('drag-over');
+            if (dropIndicator) {
+                dropIndicator.classList.remove('active');
+            }
         });
     };
 
