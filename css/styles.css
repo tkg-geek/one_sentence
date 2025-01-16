@@ -147,8 +147,10 @@ footer button:hover {
 }
 
 .title-logo {
-    max-width: 160px;
+    max-width: 240px;
     height: auto;
+    image-rendering: optimizeQuality;
+    shape-rendering: geometricPrecision;
 }
 
 #textAreas {
@@ -167,6 +169,6 @@ footer button:hover {
     }
 
     .title-logo {
-        max-width: 140px;
+        max-width: 200px;
     }
 }

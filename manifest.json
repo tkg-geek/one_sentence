@@ -1,7 +1,7 @@
 {
-    "name": "鼻毛、出てます",
-    "short_name": "鼻毛出てます",
-    "description": "鼻毛出てますApp",
+    "name": "one sentence",
+    "short_name": "one sentence",
+    "description": "one sentence App",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
