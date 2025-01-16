@@ -1,0 +1,12 @@
+/your-pwa-app
+  ├── index.html
+  ├── manifest.json
+  ├── sw.js (Service Worker)
+  ├── css/
+  │   └── styles.css
+  ├── js/
+  │   ├── app.js
+  │   └── fullscreen.js
+  └── icons/
+      ├── icon-192x192.png
+      └── icon-512x512.png 
