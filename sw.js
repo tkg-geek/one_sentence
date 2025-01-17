@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hanage-v1';
+const CACHE_NAME = 'one_sentence-v1';
 const urlsToCache = [
     '/',
     '/index.html',
