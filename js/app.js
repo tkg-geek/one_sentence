@@ -2,6 +2,7 @@ class TextEditor {
     constructor() {
         this.init();
         this.bindEvents();
+        this.initSortable();
     }
 
     init() {
@@ -13,6 +14,21 @@ class TextEditor {
         
         // LocalStorageから保存データを読み込む
         this.loadFromStorage();
+    }
+
+    initSortable() {
+        Sortable.create(this.textAreas, {
+            animation: 150,
+            handle: '.drag-handle',
+            ghostClass: 'dragging',
+            dragClass: 'dragging',
+            onStart: (evt) => {
+                evt.item.classList.add('dragging');
+            },
+            onEnd: (evt) => {
+                evt.item.classList.remove('dragging');
+            }
+        });
     }
 
     bindEvents() {
@@ -28,7 +44,6 @@ class TextEditor {
     addTextField() {
         const container = document.createElement('div');
         container.className = 'text-container';
-        container.setAttribute('draggable', 'true');
 
         const dragHandle = document.createElement('div');
         dragHandle.className = 'drag-handle';
